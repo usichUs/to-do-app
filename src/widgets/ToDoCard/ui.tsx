@@ -1,46 +1,71 @@
 import {
   Badge,
-  Box,
   Button,
-  Collapse,
+  Card,
   Group,
+  Popover,
   Stack,
   Text,
   Title,
 } from "@mantine/core";
-import styles from "./ui.module.css";
-import { Todo, TodoCategory, TodoPriority } from "../../entities/todo/type";
-import { useDisclosure } from "@mantine/hooks";
+import { Todo } from "../../entities/todo/type";
+import { PRIORITY_COLOR, STATUS_COLOR } from "./config";
 
-const todo: Todo = {
-  title: "Test Todo",
-  description:
-    "lorem ipsum blah blah bleh bleh blew lorem ipsum blah blah bleh bleh blew lorem ipsum blah blah bleh bleh blew",
-  category: TodoCategory.HOME,
-  priority: TodoPriority.HIGH,
+type ToDoCardProps = {
+  todo: Todo;
 };
 
-export function ToDoCard() {
-  const [opened, { toggle }] = useDisclosure(false);
+export function ToDoCard({ todo }: ToDoCardProps) {
   return (
-    <Stack
-      align="flex-start"
-      justify="space-around"
-      gap="md"
-      className={styles.stack}
+    <Card
+      withBorder
+      shadow="sm"
+      p="md"
+      w="350px"
+      style={{
+        borderLeft: `6px solid ${STATUS_COLOR[todo.status]}`,
+        position: "relative",
+      }}
     >
-      <Text>{todo.category}</Text>
-      <Badge>{todo.priority}</Badge>
-      <Title>{todo.title}</Title>
-      <Box maw={400} mx="auto">
-        <Group justify="center" mb={5}>
-          <Button onClick={toggle}>Toggle content</Button>
+      <Stack gap="md" align="flex-start">
+        <Text opacity=".7" c="dimmed" tt="uppercase" fw={500} fz="xs">
+          {todo.category}
+        </Text>
+
+        <Group gap="xs">
+          <Badge
+            color={PRIORITY_COLOR[todo.priority]}
+            size="lg"
+            variant="light"
+          >
+            {todo.priority}
+          </Badge>
+          <Badge color={STATUS_COLOR[todo.status]} size="lg" variant="light">
+            {todo.status}
+          </Badge>
         </Group>
 
-        <Collapse in={opened}>
-          <Text>{todo.description}</Text>
-        </Collapse>
-      </Box>
-    </Stack>
+        <Title order={3} lineClamp={2}>
+          {todo.title}
+        </Title>
+
+        {todo.description && (
+          <Popover width={200} position="bottom" withArrow shadow="md">
+            <Popover.Target>
+              <Button
+                variant="outline"
+                color={STATUS_COLOR[todo.status]}
+                fullWidth
+              >
+                Description
+              </Button>
+            </Popover.Target>
+            <Popover.Dropdown>
+              <Text size="sm">{todo.description}</Text>
+            </Popover.Dropdown>
+          </Popover>
+        )}
+      </Stack>
+    </Card>
   );
 }

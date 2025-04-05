@@ -6,6 +6,7 @@ const theme = createTheme({
   headings: {
     fontWeight: "500",
   },
+  focusRing: "auto",
   fontFamily: "Roboto, sans-serif",
 });
 

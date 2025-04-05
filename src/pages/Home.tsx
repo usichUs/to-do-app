@@ -1,11 +1,13 @@
-import { Title } from "@mantine/core";
-import { ToDoCard } from "../widgets/ToDoCard";
+import { Container, Flex } from "@mantine/core";
+import { ToDoTabs } from "../widgets/ToDoTabs";
+import { testList } from "./config";
 
 export default function Home() {
   return (
-    <>
-      <Title>Todos</Title>
-      <ToDoCard></ToDoCard>
-    </>
+    <Container fluid mt="lg">
+      <Flex justify="center" align="flex-start" direction="row">
+        <ToDoTabs todos={testList}></ToDoTabs>
+      </Flex>
+    </Container>
   );
 }
