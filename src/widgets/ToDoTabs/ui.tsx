@@ -8,9 +8,10 @@ import { Todo } from "../../entities/todo/type";
 
 type ToDoTabsProps = {
   todos: Todo[];
+  onStatusChange: (id: number, newStatus: Todo["status"]) => void;
 };
 
-export function ToDoTabs({ todos }: ToDoTabsProps) {
+export function ToDoTabs({ todos, onStatusChange }: ToDoTabsProps) {
   const [activeTab, setActiveTab] = useState<string | null>("all");
   const selectedTab = tabsConfig.find((tab) => tab.value === activeTab);
 
@@ -31,24 +32,25 @@ export function ToDoTabs({ todos }: ToDoTabsProps) {
       }),
     [todos, selectedTab?.status]
   );
+
   return (
     <Tabs value={activeTab} onChange={setActiveTab}>
-      <Tabs.List>
+      <Tabs.List grow>
         {tabsConfig.map((tab) => (
           <Tabs.Tab key={tab.value} value={tab.value}>
-            <Text size="lg">{tab.label}</Text>
+            <Text size="sm">{tab.label}</Text>
           </Tabs.Tab>
         ))}
       </Tabs.List>
 
       {tabsConfig.map((tab) => (
         <Tabs.Panel key={tab.value} value={tab.value} pt="xs">
-          {tab.value != "all" && (
+          {tab.value !== "all" && (
             <Title order={3} ta="center">
               {countedTodos} / {todos.length}
             </Title>
           )}
-          <ToDoList todos={filteredTodos} />
+          <ToDoList todos={filteredTodos} onStatusChange={onStatusChange} />
         </Tabs.Panel>
       ))}
     </Tabs>
