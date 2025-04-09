@@ -7,34 +7,34 @@ import { countTodos } from "../../shared/utils/countTodos";
 import { Todo } from "../../entities/todo/type";
 
 type ToDoTabsProps = {
-  todos: Todo[];
-  onStatusChange: (id: number, newStatus: Todo["status"]) => void;
+  todoList: Todo[];
+  onEdit: (updatedTodo: Todo) => void;
 };
 
-export function ToDoTabs({ todos, onStatusChange }: ToDoTabsProps) {
+export function ToDoTabs({ todoList, onEdit }: ToDoTabsProps) {
   const [activeTab, setActiveTab] = useState<string | null>("all");
   const selectedTab = tabsConfig.find((tab) => tab.value === activeTab);
 
   const filteredTodos = useMemo(
     () =>
       filterTodos({
-        todosList: todos,
+        todosList: todoList,
         todoStatus: selectedTab?.status,
       }),
-    [todos, selectedTab?.status]
+    [todoList, selectedTab?.status]
   );
 
   const countedTodos = useMemo(
     () =>
       countTodos({
-        todosList: todos,
+        todosList: todoList,
         todoStatus: selectedTab?.status,
       }),
-    [todos, selectedTab?.status]
+    [todoList, selectedTab?.status]
   );
 
   return (
-    <Tabs value={activeTab} onChange={setActiveTab}>
+    <Tabs value={activeTab} onChange={setActiveTab} w="100%">
       <Tabs.List grow>
         {tabsConfig.map((tab) => (
           <Tabs.Tab key={tab.value} value={tab.value}>
@@ -47,10 +47,10 @@ export function ToDoTabs({ todos, onStatusChange }: ToDoTabsProps) {
         <Tabs.Panel key={tab.value} value={tab.value} pt="xs">
           {tab.value !== "all" && (
             <Title order={3} ta="center">
-              {countedTodos} / {todos.length}
+              {countedTodos} / {todoList.length}
             </Title>
           )}
-          <ToDoList todos={filteredTodos} onStatusChange={onStatusChange} />
+          <ToDoList todoList={filteredTodos} onEdit={onEdit} />
         </Tabs.Panel>
       ))}
     </Tabs>
