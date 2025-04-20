@@ -1,0 +1,8 @@
+
+# Certificates and keys
+server.crt
+server.key
+
+*.crt
+*.key
+
