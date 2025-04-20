@@ -1,0 +1,11 @@
+
+server_port: "1488"
+
+redis:
+    port: 6379
+    password: ""
+    db: 1
+    pool_size: 50
+    max_retries: 3             
+    dial_timeout: 5
+
