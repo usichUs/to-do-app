@@ -5,13 +5,15 @@ import (
 	"strconv"
 
 	"github.com/federalbyro/to-do-app/backend/internal/domain/task"
+	errservice "github.com/federalbyro/to-do-app/backend/internal/service/errors"
 )
 
 func (s *TaskService) UpdateTask(c context.Context, input task.ToDoTask) error {
 	key := input.UserID + ":" + strconv.Itoa(input.TodoID)
-	_, existing := s.RedisCache.GetTaskRedis(c, key)
-	if existing != nil {
-		return existing
+	_, exist := s.RedisCache.GetTaskRedis(c, key)
+
+	if exist != nil {
+		return errservice.ErrNotExist
 	}
 
 	err := s.RedisCache.UpdateTaskRedis(c, input, key)

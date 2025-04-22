@@ -12,7 +12,7 @@ import (
 func (h *TaskHandler) Update(c *gin.Context) {
 	var input task.ToDoTask
 
-	if err := c.ShouldBindBodyWithJSON(&input); err != nil {
+	if err := c.ShouldBindJSON(&input); err != nil {
 		log.Printf(": [LOG] : Error binding JSON in Update: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid input", "details": err.Error()})
 		return
