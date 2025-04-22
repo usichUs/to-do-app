@@ -1,8 +1,8 @@
 
-# Certificates and keys
-server.crt
-server.key
+    # Certificates and keys
+    server.crt
+    server.key
 
-*.crt
-*.key
+    *.crt
+    *.key
 

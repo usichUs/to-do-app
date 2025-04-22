@@ -8,7 +8,7 @@ import (
 )
 
 type TaskServerService interface {
-	GetTask(ctx context.Context, userID string, taskID string) (task.ToDoTask, error)
+	GetTask(ctx context.Context, userID string, taskID string) (*task.ToDoTask, error)
 	CreateTask(ctx context.Context, task task.ToDoTask) error
 	UpdateTask(ctx context.Context, task task.ToDoTask) error
 	DeleteTask(ctx context.Context, userID string, taskID string) error

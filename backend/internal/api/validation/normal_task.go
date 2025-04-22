@@ -2,6 +2,7 @@ package validation
 
 import (
 	"errors"
+	"log"
 	"reflect"
 	"strings"
 
@@ -26,6 +27,7 @@ func ValidInt(some int) error {
 
 func ValidStr(some string) error {
 	if strings.TrimSpace(some) == "" {
+		log.Print(some)
 		return ErrManySpace
 	}
 	return nil

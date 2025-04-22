@@ -8,7 +8,7 @@ import (
 )
 
 type RedisServerRepository interface {
-	GetTaskRedis(ctx context.Context, key string) (task.ToDoTask, error)
+	GetTaskRedis(ctx context.Context, key string) (*task.ToDoTask, error)
 	CreateTaskRedis(ctx context.Context, task task.ToDoTask, key string) error
 	UpdateTaskRedis(ctx context.Context, task task.ToDoTask, key string) error
 	DeleteTaskRedis(ctx context.Context, key string) error
